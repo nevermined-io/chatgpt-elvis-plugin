@@ -17,7 +17,7 @@ where:
 - `--screen_for_pii` is an optional boolean flag to indicate whether to use the PII detection function or not. If set to `True`, the script will use the `screen_text_for_pii` function from the [`services/pii_detection`](../../services/pii_detection.py) module to check if the document text contains any PII using a language model. If PII is detected, the script will print a warning and skip the document. The default value is `False`.
 - `--extract_metadata` is an optional boolean flag to indicate whether to try to extract metadata from the document using a language model. If set to `True`, the script will use the `extract_metadata_from_document` function from the [`services/extract_metadata`](../../services/extract_metadata.py) module to extract metadata from the document text and update the metadata object accordingly. The default value is`False`.
 
-The script will open the JSONL file as a generator of dictionaries, iterate over the data, create document objects, and batch upsert them into the database. It will also print some progress messages and error messages if any, as well as the number and content of the skipped items due to errors, PII detection, or metadata extraction issues.
+The script will open the JpSONL file as a generator of dictionaries, iterate over the data, create document objects, and batch upsert them into the database. It will also print some progress messages and error messages if any, as well as the number and content of the skipped items due to errors, PII detection, or metadata extraction issues.
 
 You can use `python process_jsonl.py -h` to get a summary of the options and their descriptions.
 
