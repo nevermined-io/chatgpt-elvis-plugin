@@ -1,10 +1,10 @@
 openapi: 3.0.2
 info:
-  title: Retrieval Plugin API
-  description: A retrieval API for querying and filtering documents based on natural language queries and metadata
+  title: Nevermined Retrieval Plugin API
+  description: A retrieval API for querying and filtering Nevermined documents based on natural language queries and metadata
   version: 1.0.0
   servers:
-    - url: https://your-app-url.com
+    - url: https://mumbai.nevermined.one
 paths:
   /query:
     post:
@@ -55,6 +55,12 @@ components:
         document_id:
           title: Document Id
           type: string
+        type_document:
+          title: Type of document
+          type: string          
+        tags:
+          title: Tags
+          type: array          
     DocumentChunkWithScore:
       title: DocumentChunkWithScore
       required:

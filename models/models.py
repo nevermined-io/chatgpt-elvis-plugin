@@ -10,11 +10,13 @@ class Source(str, Enum):
 
 
 class DocumentMetadata(BaseModel):
-    source: Optional[Source] = None
-    source_id: Optional[str] = None
-    url: Optional[str] = None
-    created_at: Optional[str] = None
-    author: Optional[str] = None
+    source: Optional[Source] = None # Link to marketplace api
+    source_id: Optional[str] = None # DID
+    url: Optional[str] = None # Link to post
+    created_at: Optional[str] = None # Datetime
+    author: Optional[str] = None # Author name
+    tags: Optional[List[str]] = None # List of tags
+    type_document: Optional[str] = None # Type of document
 
 
 class DocumentChunkMetadata(DocumentMetadata):
