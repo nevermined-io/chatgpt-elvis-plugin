@@ -23,35 +23,49 @@ This README provides detailed information on how to set up, develop, and deploy 
 
 ## Table of Contents
 
-- [About](#about)
-  - [Plugins](#plugins)
-  - [Retrieval Plugin](#retrieval-plugin)
-  - [Memory Feature](#memory-feature)
-  - [Security](#security)
-  - [API Endpoints](#api-endpoints)
-- [Quickstart](#quickstart)
-- [Development](#development)
-  - [Setup](#setup)
-    - [General Environment Variables](#general-environment-variables)
-  - [Choosing a Vector Database](#choosing-a-vector-database)
-    - [Pinecone](#pinecone)
-    - [Weaviate](#weaviate)
-    - [Zilliz](#zilliz)
-    - [Milvus](#milvus)
-    - [Qdrant](#qdrant)
-    - [Redis](#redis)
-  - [Running the API Locally](#running-the-api-locally)
-  - [Personalization](#personalization)
-  - [Authentication Methods](#authentication-methods)
-- [Deployment](#deployment)
-  - [Deploying to Fly.io](#deploying-to-flyio)
-  - [Deploying to Heroku](#deploying-to-heroku)
-  - [Other Deployment Options](#other-deployment-options)
-- [Webhooks](#webhooks)
-- [Scripts](#scripts)
-- [Limitations](#limitations)
-- [Contributors](#contributors)
-- [Future Directions](#future-directions)
+- [ChatGPT Retrieval Plugin](#chatgpt-retrieval-plugin)
+  - [Introduction](#introduction)
+  - [Table of Contents](#table-of-contents)
+  - [About](#about)
+    - [Plugins](#plugins)
+    - [Retrieval Plugin](#retrieval-plugin)
+    - [Memory Feature](#memory-feature)
+    - [Security](#security)
+    - [API Endpoints](#api-endpoints)
+  - [Quickstart](#quickstart)
+  - [Development](#development)
+    - [Setup](#setup)
+      - [General Environment Variables](#general-environment-variables)
+    - [Choosing a Vector Database](#choosing-a-vector-database)
+      - [Pinecone](#pinecone)
+      - [Weaviate](#weaviate)
+        - [Set up a Weaviate Instance](#set-up-a-weaviate-instance)
+        - [Configure Weaviate Environment Variables](#configure-weaviate-environment-variables)
+      - [Zilliz](#zilliz)
+        - [Deploying the Database](#deploying-the-database)
+      - [Running Zilliz Integration Tests](#running-zilliz-integration-tests)
+      - [Milvus](#milvus)
+        - [Deploying the Database](#deploying-the-database-1)
+      - [Running Milvus Integration Tests](#running-milvus-integration-tests)
+      - [Qdrant](#qdrant)
+        - [Qdrant Cloud](#qdrant-cloud)
+        - [Self-hosted Qdrant Instance](#self-hosted-qdrant-instance)
+        - [Running Qdrant Integration Tests](#running-qdrant-integration-tests)
+      - [Redis](#redis)
+    - [Running the API locally](#running-the-api-locally)
+    - [Personalization](#personalization)
+    - [Authentication Methods](#authentication-methods)
+  - [Deployment](#deployment)
+    - [Deploying to Fly.io](#deploying-to-flyio)
+    - [Deploying to Heroku](#deploying-to-heroku)
+    - [Other Deployment Options](#other-deployment-options)
+  - [Installing a Developer Plugin](#installing-a-developer-plugin)
+  - [Webhooks](#webhooks)
+  - [Scripts](#scripts)
+  - [Limitations](#limitations)
+  - [Future Directions](#future-directions)
+  - [Contributors](#contributors)
+  - [Nevermined instructions](#nevermined-instructions)
 
 ## About
 
@@ -856,3 +870,14 @@ We would like to extend our gratitude to the following contributors for their co
 - [Redis](https://redis.io/)
   - [spartee](https://github.com/spartee)
   - [tylerhutcherson](https://github.com/tylerhutcherson)
+
+## Nevermined instructions
+
+```
+source .env.local.redis
+cd examples/docker/redis/
+docker-compose up -d
+cd ../../../
+poetry shell
+poetry run start
+```
