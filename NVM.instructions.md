@@ -7,4 +7,5 @@ docker-compose up -d
 cd ../../../
 poetry shell
 poetry run start
+python llama/llama.py
 ```
