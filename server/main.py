@@ -1,6 +1,8 @@
 import os
-from typing import Optional
+from typing import List, Optional
+from llama_index import Document, GPTSimpleVectorIndex
 import uvicorn
+from llama_index.readers import ChatGPTRetrievalPluginReader
 from fastapi import FastAPI, File, Form, HTTPException, Depends, Body, UploadFile
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.staticfiles import StaticFiles
@@ -142,8 +144,40 @@ async def delete(
         return DeleteResponse(success=success)
     except Exception as e:
         print("Error:", e)
-        raise HTTPException(status_code=500, detail="Internal Service Error")
+        raise HTTPException(status_code=500, detail="Internal Service Error")  
 
+
+@app.post(
+    "/ask",
+)
+async def ask_song(
+    request: QueryRequest = Body(...),
+):
+    try:
+        documents: List[Document] = []
+        results = await datastore.query(
+            request.queries,
+        )
+        for query_result in results:
+            for result in query_result.results:
+                result_id = result.id
+                result_txt = result.text
+                result_embedding = result.embedding
+                document = Document(
+                    text=result_txt,
+                    doc_id=result_id,
+                    embedding=result_embedding,
+                )
+                documents.append(document)
+
+            # NOTE: there should only be one query
+            break
+        index = GPTSimpleVectorIndex.from_documents(documents)
+        response = index.query("Summarize the content of the song.",  response_mode='compact')
+        return response
+    except Exception as e:
+        print("Error:", e)
+        raise HTTPException(status_code=500, detail="Internal Service Error")
 
 @app.on_event("startup")
 async def startup():
