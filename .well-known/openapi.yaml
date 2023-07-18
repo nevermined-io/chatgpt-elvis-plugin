@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Nevermined Retrieval Plugin API
   description: A retrieval API for querying and filtering Nevermined documents based on natural language queries and metadata
-  version: 0.0.2
+  version: 0.0.3
   servers:
     - url: https://1sfjwao29oy9hj0sqyox8dpkxfwgj31dxzpe3erhuc737ud2th.proxy.goerli.nevermined.app
 paths:
