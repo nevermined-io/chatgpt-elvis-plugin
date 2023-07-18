@@ -10,10 +10,10 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://1sfjwao29oy9hj0sqyox8dpkxfwgj31dxzpe3erhuc737ud2th.proxy.goerli.nevermined.app/.well-known/openapi.yaml",
+    "url": "https://zparolnv3lqwtjk26xfkgustpbbk9gz9so4x30zfe5v8x8wqs.proxy.goerli.nevermined.app/.well-known/openapi.yaml",
     "has_user_authentication": false
   },
-  "logo_url": "https://1sfjwao29oy9hj0sqyox8dpkxfwgj31dxzpe3erhuc737ud2th.proxy.goerli.nevermined.app/.well-known/nvm-logo.png",
+  "logo_url": "https://zparolnv3lqwtjk26xfkgustpbbk9gz9so4x30zfe5v8x8wqs.proxy.goerli.nevermined.app/.well-known/nvm-logo.png",
   "contact_email": "info@nevermined.io", 
   "legal_info_url": "https://nevermined.io/"
 }
