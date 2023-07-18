@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Elvis Songs Summarizer
   description: Plugin for summarizing Elvis songs. Giving an Elvis title song, it summarizes the lyrics of that song
-  version: 0.0.5
+  version: 0.0.6
   servers:
     - url: https://zparolnv3lqwtjk26xfkgustpbbk9gz9so4x30zfe5v8x8wqs.proxy.goerli.nevermined.app
 paths:
@@ -36,7 +36,7 @@ paths:
     post:
       summary: Summarize
       description: Given an Elvis song title it summarizes the lyrics of that song. Break down complex questions into sub-questions. Refine results by criteria, e.g. time / source, don't do this often. Split queries if ResponseTooLargeError occurs.
-      operationId: query_query_post
+      operationId: ask_query_post
       requestBody:
         content:
           application/json:
@@ -86,7 +86,9 @@ components:
           type: string          
         tags:
           title: Tags
-          type: array          
+          type: array
+          items:
+            type: string          
     DocumentChunkWithScore:
       title: DocumentChunkWithScore
       required:
