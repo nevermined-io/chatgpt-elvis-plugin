@@ -10,10 +10,10 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://your-app-url.com/.well-known/openapi.yaml",
+    "url": "https://1sfjwao29oy9hj0sqyox8dpkxfwgj31dxzpe3erhuc737ud2th.proxy.goerli.nevermined.app/.well-known/openapi.yaml",
     "has_user_authentication": false
   },
-  "logo_url": "https://your-app-url.com/.well-known/logo.png",
-  "contact_email": "hello@contact.com", 
-  "legal_info_url": "http://example.com/legal-info"
+  "logo_url": "https://1sfjwao29oy9hj0sqyox8dpkxfwgj31dxzpe3erhuc737ud2th.proxy.goerli.nevermined.app/.well-known/nvm-logo.png",
+  "contact_email": "info@nevermined.io", 
+  "legal_info_url": "https://nevermined.io/"
 }
