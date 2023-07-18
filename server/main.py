@@ -39,8 +39,8 @@ app.mount("/.well-known", StaticFiles(directory=".well-known"), name="static")
 sub_app = FastAPI(
     title="Nevermined Retrieval Plugin API",
     description="A retrieval API for querying and filtering Nevermined documents based on natural language queries and metadata",
-    version="1.0.0",
-    servers=[{"url": "https://mumbai.nevermined.one"}],
+    version="0.0.3",
+    servers=[{"url": "https://1sfjwao29oy9hj0sqyox8dpkxfwgj31dxzpe3erhuc737ud2th.proxy.goerli.nevermined.app/"}],
     dependencies=[Depends(validate_token)],
 )
 app.mount("/sub", sub_app)
