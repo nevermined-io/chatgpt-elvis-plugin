@@ -150,7 +150,7 @@ async def delete(
 
 @app.post(
     "/ask",
-    response_model=QueryResponse,
+    # response_model=QueryResponse,
     # NOTE: We are describing the shape of the API endpoint input due to a current limitation in parsing arrays of objects from OpenAPI schemas. This will not be necessary in the future.
     description="Given an Elvis song title it summarizes the lyrics of that song. Break down complex questions into sub-questions. Refine results by criteria, e.g. time / source, don't do this often. Split queries if ResponseTooLargeError occurs.",
 )
@@ -162,6 +162,7 @@ async def ask_song(
         results = await datastore.query(
             request.queries,
         )
+        print(results)
         for query_result in results:
             for result in query_result.results:
                 result_id = result.id
@@ -178,6 +179,7 @@ async def ask_song(
             break
         index = GPTSimpleVectorIndex.from_documents(documents)
         response = index.query("Summarize the content of the song.",  response_mode='compact')
+        print(response)
         return response
     except Exception as e:
         print("Error:", e)
