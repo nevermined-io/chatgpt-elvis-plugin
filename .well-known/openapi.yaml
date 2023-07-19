@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Elvis Songs Summarizer
   description: Plugin for summarizing Elvis songs. Giving an Elvis title song, it summarizes the lyrics of that song
-  version: 0.0.6
+  version: 0.0.7
   servers:
     - url: https://zparolnv3lqwtjk26xfkgustpbbk9gz9so4x30zfe5v8x8wqs.proxy.goerli.nevermined.app
 paths:
