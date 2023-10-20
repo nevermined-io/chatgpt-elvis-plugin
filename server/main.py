@@ -3,6 +3,7 @@ from typing import List, Optional
 from llama_index import Document, GPTSimpleVectorIndex
 import uvicorn
 from llama_index.readers import ChatGPTRetrievalPluginReader
+from starlette.responses import Response
 from fastapi import FastAPI, File, Form, HTTPException, Depends, Body, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -42,7 +43,7 @@ app.mount("/.well-known", StaticFiles(directory=".well-known"), name="static")
 sub_app = FastAPI(
     title="Nevermined Retrieval Plugin API",
     description="A retrieval API for querying and filtering Nevermined documents based on natural language queries and metadata",
-    version="0.0.8",
+    version="0.0.9",
     servers=[{"url": "https://zparolnv3lqwtjk26xfkgustpbbk9gz9so4x30zfe5v8x8wqs.proxy.goerli.nevermined.app/"}],
     dependencies=[Depends(validate_token)],
 )
@@ -183,10 +184,13 @@ async def ask_song(
             break
         index = GPTSimpleVectorIndex.from_documents(documents)
         content = index.query("Summarize the content of the song.",  response_mode='compact')        
-        print(content)
+        print("Content: " + content.__str__())
         # return response
         headers = {NVM_CREDITS_RESP_HEADER: "3"}
-        return JSONResponse(content=content, headers=headers)
+
+        return Response(content=content.__str__(), headers=headers)        
+            
+        # return QueryResponse(content=content, headers=headers)
     except Exception as e:
         print("Error:", e)
         raise HTTPException(status_code=500, detail="Internal Service Error")
@@ -194,7 +198,7 @@ async def ask_song(
 @app.on_event("startup")
 async def startup():
     global datastore
-    datastore = await get_datastore()
+    datastore = await get_datastore()    
 
 
 def start():
