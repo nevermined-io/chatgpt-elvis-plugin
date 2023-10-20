@@ -4,6 +4,7 @@ from llama_index import Document, GPTSimpleVectorIndex
 import uvicorn
 from llama_index.readers import ChatGPTRetrievalPluginReader
 from fastapi import FastAPI, File, Form, HTTPException, Depends, Body, UploadFile
+from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.staticfiles import StaticFiles
 from loguru import logger
@@ -20,6 +21,8 @@ from datastore.factory import get_datastore
 from services.file import get_document_from_file
 
 from models.models import DocumentMetadata, Source
+
+NVM_CREDITS_RESP_HEADER = "NVMCreditsConsumed"
 
 bearer_scheme = HTTPBearer()
 BEARER_TOKEN = os.environ.get("BEARER_TOKEN")
@@ -39,7 +42,7 @@ app.mount("/.well-known", StaticFiles(directory=".well-known"), name="static")
 sub_app = FastAPI(
     title="Nevermined Retrieval Plugin API",
     description="A retrieval API for querying and filtering Nevermined documents based on natural language queries and metadata",
-    version="0.0.7",
+    version="0.0.8",
     servers=[{"url": "https://zparolnv3lqwtjk26xfkgustpbbk9gz9so4x30zfe5v8x8wqs.proxy.goerli.nevermined.app/"}],
     dependencies=[Depends(validate_token)],
 )
@@ -99,7 +102,8 @@ async def query_main(
         results = await datastore.query(
             request.queries,
         )
-        return QueryResponse(results=results)
+        return QueryResponse(results=results, headers={NVM_CREDITS_RESP_HEADER: "1"})
+    
     except Exception as e:
         logger.error(e)
         raise HTTPException(status_code=500, detail="Internal Service Error")
@@ -155,7 +159,7 @@ async def delete(
     description="Given an Elvis song title it summarizes the lyrics of that song. Break down complex questions into sub-questions. Refine results by criteria, e.g. time / source, don't do this often. Split queries if ResponseTooLargeError occurs.",
 )
 async def ask_song(
-    request: QueryRequest = Body(...),
+    request: QueryRequest = Body(...)
 ):
     try:
         documents: List[Document] = []
@@ -178,9 +182,11 @@ async def ask_song(
             # NOTE: there should only be one query
             break
         index = GPTSimpleVectorIndex.from_documents(documents)
-        response = index.query("Summarize the content of the song.",  response_mode='compact')
-        print(response)
-        return response
+        content = index.query("Summarize the content of the song.",  response_mode='compact')        
+        print(content)
+        # return response
+        headers = {NVM_CREDITS_RESP_HEADER: "3"}
+        return JSONResponse(content=content, headers=headers)
     except Exception as e:
         print("Error:", e)
         raise HTTPException(status_code=500, detail="Internal Service Error")
