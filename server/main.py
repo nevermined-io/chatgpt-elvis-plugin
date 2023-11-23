@@ -1,4 +1,5 @@
 import os
+import random
 from typing import List, Optional
 from llama_index import Document, GPTSimpleVectorIndex
 import uvicorn
@@ -186,9 +187,9 @@ async def ask_song(
         content = index.query("Summarize the content of the song.",  response_mode='compact')        
         print("Content: " + content.__str__())
         # return response
-        headers = {NVM_CREDITS_RESP_HEADER: "3"}
+        headers = {NVM_CREDITS_RESP_HEADER: random.randint(1, 5)}
 
-        return Response(content=content.__str__(), headers=headers)        
+        return Response(content=content.__str__(), headers=headers)
             
         # return QueryResponse(content=content, headers=headers)
     except Exception as e:
