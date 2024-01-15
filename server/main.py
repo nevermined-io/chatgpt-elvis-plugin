@@ -1,6 +1,6 @@
 import os
 from typing import List, Optional
-from llama_index import Document, GPTSimpleVectorIndex
+from llama_index import Document, VectorStoreIndex
 import uvicorn
 from llama_index.readers import ChatGPTRetrievalPluginReader
 from starlette.responses import Response
@@ -182,8 +182,9 @@ async def ask_song(
 
             # NOTE: there should only be one query
             break
-        index = GPTSimpleVectorIndex.from_documents(documents)
-        content = index.query("Summarize the content of the song.",  response_mode='compact')        
+        index = VectorStoreIndex.from_documents(documents)
+        query_engine = index.as_query_engine()
+        content = query_engine.query("Summarize the content of the song.")        
         print("Content: " + content.__str__())
         # return response
         headers = {NVM_CREDITS_RESP_HEADER: "3"}
