@@ -9,6 +9,7 @@ from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.staticfiles import StaticFiles
 from loguru import logger
+import random
 
 from models.api import (
     DeleteRequest,
@@ -187,7 +188,9 @@ async def ask_song(
         content = query_engine.query("Summarize the content of the song.")        
         print("Content: " + content.__str__())
         # return response
-        headers = {NVM_CREDITS_RESP_HEADER: "3"}
+
+        credits = str(random.randint(1, 5))
+        headers = {NVM_CREDITS_RESP_HEADER: credits}
 
         return Response(content=content.__str__(), headers=headers)        
             
