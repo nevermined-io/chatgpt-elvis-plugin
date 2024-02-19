@@ -1,7 +1,7 @@
 import os
 import random
 from typing import List, Optional
-from llama_index import Document, GPTSimpleVectorIndex
+from llama_index import Document, VectorStoreIndex
 import uvicorn
 from llama_index.readers import ChatGPTRetrievalPluginReader
 from starlette.responses import Response
@@ -10,6 +10,7 @@ from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.staticfiles import StaticFiles
 from loguru import logger
+import random
 
 from models.api import (
     DeleteRequest,
@@ -44,7 +45,7 @@ app.mount("/.well-known", StaticFiles(directory=".well-known"), name="static")
 sub_app = FastAPI(
     title="Nevermined Retrieval Plugin API",
     description="A retrieval API for querying and filtering Nevermined documents based on natural language queries and metadata",
-    version="0.0.9",
+    version="0.1.0",
     servers=[{"url": "https://zparolnv3lqwtjk26xfkgustpbbk9gz9so4x30zfe5v8x8wqs.proxy.goerli.nevermined.app/"}],
     dependencies=[Depends(validate_token)],
 )
@@ -183,11 +184,13 @@ async def ask_song(
 
             # NOTE: there should only be one query
             break
-        index = GPTSimpleVectorIndex.from_documents(documents)
-        content = index.query("Summarize the content of the song.",  response_mode='compact')        
+        index = VectorStoreIndex.from_documents(documents)
+        query_engine = index.as_query_engine()
+        content = query_engine.query("Summarize the content of the song.")        
         print("Content: " + content.__str__())
         # return response
         headers = {NVM_CREDITS_RESP_HEADER: random.randint(1, 5)}
+        print("Response Headers: " + headers.__str__())
 
         return Response(content=content.__str__(), headers=headers)
             
