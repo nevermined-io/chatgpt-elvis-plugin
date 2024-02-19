@@ -1,4 +1,5 @@
 import os
+import random
 from typing import List, Optional
 from llama_index import Document, VectorStoreIndex
 import uvicorn
@@ -188,11 +189,10 @@ async def ask_song(
         content = query_engine.query("Summarize the content of the song.")        
         print("Content: " + content.__str__())
         # return response
+        headers = {NVM_CREDITS_RESP_HEADER: random.randint(1, 5)}
+        print("Response Headers: " + headers.__str__())
 
-        credits = str(random.randint(1, 5))
-        headers = {NVM_CREDITS_RESP_HEADER: credits}
-
-        return Response(content=content.__str__(), headers=headers)        
+        return Response(content=content.__str__(), headers=headers)
             
         # return QueryResponse(content=content, headers=headers)
     except Exception as e:

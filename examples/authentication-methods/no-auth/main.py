@@ -27,7 +27,7 @@ app.mount("/.well-known", StaticFiles(directory=".well-known"), name="static")
 sub_app = FastAPI(
     title="Retrieval Plugin API",
     description="A retrieval API for querying and filtering documents based on natural language queries and metadata",
-    version="1.0.0",
+    version="0.1.2",
     servers=[{"url": "https://your-app-url.com"}],
 )
 app.mount("/sub", sub_app)

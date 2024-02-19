@@ -67,6 +67,7 @@ def get_chat_completion(
     else:
         response = openai.ChatCompletion.create(
             deployment_id = deployment_id,
+            model=model,
             messages=messages,
         )
 
